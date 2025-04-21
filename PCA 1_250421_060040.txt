@@ -1,0 +1,37 @@
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Step 1: Load Iris dataset
+iris = load_iris()
+X = iris.data  # Features
+y = iris.target  # Target classes
+feature_names = iris.feature_names
+target_names = iris.target_names
+
+# Step 2: Convert to DataFrame
+df = pd.DataFrame(X, columns=feature_names)
+df['Target'] = y
+
+# Step 3: Apply PCA
+pca = PCA(n_components=2)  # Reduce to 2 dimensions for visualization
+X_pca = pca.fit_transform(X)
+
+# Step 4: Create a new DataFrame with principal components
+pca_df = pd.DataFrame(data=X_pca, columns=['PC1', 'PC2'])
+pca_df['Target'] = y
+
+# Step 5: Visualize the PCA result
+plt.figure(figsize=(8, 6))
+sns.scatterplot(data=pca_df, x='PC1', y='PC2', hue=iris.target_names[y], palette='Set2', s=100)
+plt.title('PCA on Iris Dataset')
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.legend(title='Iris Species')
+plt.grid(True)
+plt.show()
+
+# Step 6: Explained variance
+print("Explained variance by components:", pca.explained_variance_ratio_)
