@@ -1,0 +1,47 @@
+import pandas as pd
+
+# Create the DataFrame from given data
+data = {
+    'Make': ['Honda', 'Honda', 'Toyota', 'Nissan', 'Toyota', 'Honda', 'Ford', 
+             'Chevrolet', 'Chevrolet', 'Dodge', 'Dodge'],
+    'Model': ['Accord', 'Accord', 'Camry', 'Altima', 'Corolla', 'Civic', 
+              'F-150', 'Silverado', 'Impala', 'Charger', 'Charger'],
+    'Color': ['Red', 'Blue', 'Black', 'Green', 'Black', 'White', 
+              'Black', 'Green', 'Silver', 'Silver', 'Silver'],
+    'Mileage': [63512, 95135, 75006, 69847, 87278, 138789, 
+                89073, 109231, 87675, 34853, 58173],
+    'Sell Price': [4000, 2500, 45000, 3826, 2224, 2723, 
+                   3950, 4959, 3791, 4349, 4252],
+    'Buy Price': [3000, 2000, 44000, 3000, 2100, 1900, 
+                  3000, 4500, 3500, 3500, 4000]
+}
+
+df = pd.DataFrame(data)
+
+# Save to CSV
+df.to_csv('cars_data.csv', index=False)
+print("CSV file 'cars_data.csv' created successfully.\n")
+
+# Read from CSV
+cars_df = pd.read_csv('cars_data.csv')
+print("Original DataFrame:")
+print(cars_df)
+print("\n" + "="*80 + "\n")
+
+# 1. Display records with Buy Price >= 3000
+print("Cars with Buy Price >= 3000:")
+print(cars_df[cars_df['Buy Price'] >= 3000])
+print("\n" + "="*80 + "\n")
+
+# 2. Sort data in ascending order (by Make then Model)
+print("Sorted DataFrame (ascending order):")
+sorted_df = cars_df.sort_values(by=['Make', 'Model'])
+print(sorted_df)
+print("\n" + "="*80 + "\n")
+
+# 3. Group by Model
+print("Data grouped by Model:")
+grouped = cars_df.groupby('Model')
+for name, group in grouped:
+    print(f"\nModel: {name}")
+    print(group)
